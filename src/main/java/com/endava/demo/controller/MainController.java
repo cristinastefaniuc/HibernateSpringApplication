@@ -17,6 +17,4 @@ public class MainController {
         model.addAttribute("interns", internService.getAllInterns());
         return "index";
     }
-
-
 }

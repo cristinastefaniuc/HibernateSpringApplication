@@ -2,70 +2,64 @@ package com.endava.demo.dao.impl;
 
 import com.endava.demo.dao.InternDAO;
 import com.endava.demo.entity.Intern;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-
-import static com.endava.demo.entity.InternStreams.ANALYST;
-import static com.endava.demo.entity.InternStreams.JAVA;
 
 @Repository
 public class InternDAOImpl implements InternDAO {
 
-    private static List<Intern> internList = new ArrayList<>();
+    private static Session currentSession;
 
-    static {
-        internList.add(new Intern(1, "Mihaela", 21, JAVA));
-        internList.add(new Intern(2, "Eugen", 18, JAVA));
-        internList.add(new Intern(3, "Xenia", 19, JAVA));
-        internList.add(new Intern(4, "Denisa", 21, ANALYST));
+    public static SessionFactory buildSessionFactory() {
+        return new Configuration().addAnnotatedClass(Intern.class).buildSessionFactory();
+    }
+
+    public static Session openSession() {
+        return currentSession = buildSessionFactory().openSession();
+    }
+
+    public static Transaction beginTransaction() {
+        return currentSession.beginTransaction();
+    }
+
+    public static void commitTransaction() {
+        beginTransaction().commit();
     }
 
     @Override
     public List<Intern> findAll() {
-        return internList;
+        return openSession().createQuery("SELECT i FROM Intern i", Intern.class)
+                .getResultList();
     }
 
     @Override
     public void save(Intern intern) {
-        internList.add(intern);
-
-    }
-
-    @Override
-    public int getMaxID() {
-        return internList
-                .stream()
-                .max(Comparator.comparingInt(Intern::getId))
-                .get()
-                .getId();
+        openSession().persist(intern);
+        commitTransaction();
+        currentSession.close();
     }
 
     @Override
     public void delete(int id) {
-        for (Intern i : new ArrayList<>(internList)) {
-            if (i.getId() == id)
-                internList.remove(i);
-        }
+        Intern intern = currentSession.get(Intern.class, id);
+        openSession().delete(intern);
+        commitTransaction();
+        currentSession.close();
     }
 
     @Override
     public Intern getInternById(int id) {
-        return internList
-                .stream()
-                .filter(intern -> intern.getId() == id)
-                .findAny()
-                .get();
+        return currentSession.get(Intern.class, id);
     }
 
     @Override
     public void update(Intern intern) {
-        getInternById(intern.getId()).setName(intern.getName());
-        getInternById(intern.getId()).setAge(intern.getAge());
-        getInternById(intern.getId()).setStream(intern.getStream());
+        openSession().saveOrUpdate(intern);
+        commitTransaction();
+        currentSession.close();
     }
-
-
 }

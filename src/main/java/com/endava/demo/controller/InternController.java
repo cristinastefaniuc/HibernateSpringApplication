@@ -44,6 +44,4 @@ public class InternController {
         internService.update(intern);
         return "redirect:/";
     }
-
-
 }

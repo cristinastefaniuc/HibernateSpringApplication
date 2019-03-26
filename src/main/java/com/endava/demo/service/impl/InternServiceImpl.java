@@ -22,7 +22,6 @@ public class InternServiceImpl implements InternService {
 
     @Override
     public void add(Intern intern) {
-        intern.setId(internDAO.getMaxID() + 1);
         internDAO.save(intern);
     }
 
@@ -40,5 +39,4 @@ public class InternServiceImpl implements InternService {
     public void update(Intern intern) {
         internDAO.update(intern);
     }
-
 }
