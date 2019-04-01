@@ -31,13 +31,13 @@ public class InternDAOImpl implements InternDAO {
 
     @Override
     @Transactional
-    public void delete(int id) {
+    public void delete(Integer id) {
         Intern intern = entityManager.find(Intern.class, id);
         entityManager.remove(intern);
     }
 
     @Override
-    public Intern getInternById(int id) {
+    public Intern getInternById(Integer id) {
         return entityManager.find(Intern.class, id);
     }
 

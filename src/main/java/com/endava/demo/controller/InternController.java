@@ -23,7 +23,12 @@ public class InternController {
 
     @PostMapping(value = "/newForm")
     public String fillForm(@ModelAttribute Intern intern) {
-        internService.add(intern);
+        if(intern.getId() == null) {
+            internService.add(intern);
+        }
+        else {
+            internService.update(intern);
+        }
         return "redirect:/";
     }
 
@@ -36,14 +41,6 @@ public class InternController {
     @GetMapping(value = "/update/{id}")
     public String updateIntern(@PathVariable int id, Model model) {
         model.addAttribute("intern", internService.getInternById(id));
-        return "updateForm";
+        return "newForm";
     }
-
-    @PostMapping(value = "/updateForm")
-    public String fillUpdateForm(@ModelAttribute Intern intern) {
-        internService.update(intern);
-        return "redirect:/";
-    }
-
-
 }

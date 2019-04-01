@@ -7,9 +7,16 @@
 <body>
 
 <form th:action="@{/newForm}" th:object="${intern}" method="post">
+    <input type="hidden" th:field="*{id}" /><br/>
     Name: <input type="text" th:field="*{name}" /><br/>
     Age: <input type="text" th:field="*{age}"/><br/>
-    Stream: <input type="text" th:field="*{stream}"/>
+    Stream: 
+    <select th:field="*{stream}">
+        <option value="JAVA">JAVA</option>
+        <option value="NET">NET</option>
+        <option value="IOS">IOS</option>
+        <option value="ANALYST">ANALYST</option>
+    </select>
     <input type="submit" value="submit"/>
 </form>
 

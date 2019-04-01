@@ -26,12 +26,12 @@ public class InternServiceImpl implements InternService {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(Integer id) {
         internDAO.delete(id);
     }
 
     @Override
-    public Intern getInternById(int id) {
+    public Intern getInternById(Integer id) {
         return internDAO.getInternById(id);
     }
 
