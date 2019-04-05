@@ -11,3 +11,7 @@ table {
 th, td {
     padding: 15px;
 }
+
+div {
+    width: 85%;
+}

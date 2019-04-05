@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="../static/css/index.css" th:href="@{/css/index.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-<table>
-    <thead>
+<div>
+ <table class="table table-sm">
+    <thead class="thead-dark">
     <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Stream</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th class="text-center">ID</th>
+        <th class="text-center">Name</th>
+        <th class="text-center">Age</th>
+        <th class="text-center">Stream</th>
+        <th class="text-center">Edit</th>
+        <th class="text-center">Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -22,16 +24,16 @@
         <td colspan="3">No Interns</td>
     </tr>
     <tr th:each="intern : ${interns}">
-        <td><span th:text="${intern.id}">ID</span></td>
-        <td><span th:text="${intern.name}">Name</span></td>
-        <td><span th:text="${intern.age}">Age</span></td>
-        <td><span th:text="${intern.stream}">Stream</span></td>
-        <td><a th:href="@{'/update/'+ ${intern.id}}">Edit</a></td>
-        <td><a th:href="@{'/delete/'+ ${intern.id}}">Delete</a></td>
+        <td class="align-middle"><span th:text="${intern.id}">ID</span></td>
+        <td class="align-middle"><span th:text="${intern.name}">Name</span></td>
+        <td class="align-middle text-center"><span th:text="${intern.age}">Age</span></td>
+        <td class="align-middle"><span th:text="${intern.stream}">Stream</span></td>
+        <td class="align-middle text-center"><a class="btn btn-outline-danger" th:href="@{'/update/'+ ${intern.id}}">Edit</a></td>
+        <td class="align-middle text-center"><a class="btn btn-outline-danger" th:href="@{'/delete/'+ ${intern.id}}">Delete</a></td>
     </tr>
     </tbody>
 </table>
-
+</div>
 <a href="newForm"> Form </a>
 </body>
 </html>
